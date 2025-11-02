@@ -1,0 +1,2 @@
+- Within this application, implement a simple Salesforce service. The models will write to a database, or to an in-memory store (implemented as a simple "Map"), depending on the configuration.
+- Within src, define an additional node package for an SDK for the Salesforce api, to be consumed by a client application.

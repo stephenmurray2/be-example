@@ -1,0 +1,6 @@
+- Install docker and create simple configs for running the api either locally or on AWS ECS.
+- Install MongoDB driver for the database layer
+- Include a serverless framework config for AWS API Gateway
+- Use JWT for authentication middleware
+- Install connect-timeout for request context expiry
+- Use Redis for in-memory caching

@@ -1,0 +1,42 @@
+{
+  "name": "@be-example/salesforce-sdk",
+  "version": "1.0.0",
+  "description": "TypeScript SDK for SalesforceService API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "npm run build",
+    "test": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js",
+    "test:unit": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js tests/salesforceCartClient.test.ts",
+    "test:integration": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js tests/salesforceCartClient.integration.test.ts --runInBand",
+    "test:watch": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --watch",
+    "test:coverage": "node --experimental-vm-modules ../../node_modules/jest/bin/jest.js --coverage"
+  },
+  "keywords": [
+    "salesforce",
+    "sdk",
+    "api-client",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC",
+  "peerDependencies": {
+    "axios": "^1.0.0"
+  },
+  "devDependencies": {
+    "@jest/globals": "^30.2.0",
+    "@types/axios-mock-adapter": "^1.9.0",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^18.0.0",
+    "axios-mock-adapter": "^2.1.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "typescript": "^5.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

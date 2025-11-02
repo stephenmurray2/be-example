@@ -1,0 +1,60 @@
+service: be-example
+
+frameworkVersion: '4'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  memorySize: 512
+  timeout: 30
+  environment:
+    NODE_ENV: ${self:provider.stage}
+    MONGODB_URI: ${ssm:/be-example/${self:provider.stage}/mongodb-uri}
+    REDIS_HOST: ${ssm:/be-example/${self:provider.stage}/redis-host}
+    REDIS_PORT: ${ssm:/be-example/${self:provider.stage}/redis-port}
+    JWT_SECRET: ${ssm:/be-example/${self:provider.stage}/jwt-secret~true}
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - ssm:GetParameter
+            - ssm:GetParameters
+          Resource:
+            - arn:aws:ssm:${self:provider.region}:*:parameter/be-example/${self:provider.stage}/*
+        - Effect: Allow
+          Action:
+            - logs:CreateLogGroup
+            - logs:CreateLogStream
+            - logs:PutLogEvents
+          Resource:
+            - arn:aws:logs:${self:provider.region}:*:log-group:/aws/lambda/*:*:*
+
+plugins:
+  - serverless-offline
+
+functions:
+  api:
+    handler: dist/lambda.handler
+    events:
+      - httpApi:
+          path: /{proxy+}
+          method: ANY
+      - httpApi:
+          path: /
+          method: ANY
+
+package:
+  individually: false
+  patterns:
+    - '!node_modules/**'
+    - '!src/**'
+    - 'dist/**'
+    - 'node_modules/**'
+
+custom:
+  serverless-offline:
+    httpPort: 3000
+    noPrependStageInUrl: true
